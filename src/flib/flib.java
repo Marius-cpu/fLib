@@ -132,7 +132,7 @@ extends Canvas{
     constants.e.add(constants.e2);
     constants.e.setLocationRelativeTo(null);
         flib i = new flib();
-        i.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+//         i.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         constants.e.add(i);  
      }
 }
