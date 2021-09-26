@@ -1,138 +1,267 @@
-package flib;
 
+package flib;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.geom.Ellipse2D;
+import java.io.File;
+import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.util.Scanner;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 
 import flib.constants.constants;
-/*
- * set of methods to simplify JFrame handling, customizing and so on.
- * early development
- * it was my personal choice to use brackets in that way, please don't send hate.
-  @author Marius Sebastian
- */
-@SuppressWarnings("unused")
-public class flib
-extends Canvas{
-	private static final long serialVersionUID = 1L;
 
+
+@SuppressWarnings({ "unused", "serial" })
+
+public class flib extends Canvas
+{		/*
+		 * @author Mariusss Sebastian
+		 *
+		 */
+	static constants c = new constants();
+	static Image img;
+	private  final long serialVersionUID = 1L;
 	public static void frameTitle(String f)
     {
-    constants.e.setTitle(f);
+    c.e.setTitle(f);
     }
-    
+	public static void debugging(boolean debg) throws IOException {
+    	c.debg = debg;
+		if(c.debg == true) {
+			System.err.println("You activated debugging.");
+    		debug();
+    	}
+    }
     public static void isVis(boolean isvi)
     {
-        constants.e.setVisible(isvi);
+    	String e = "";
+        c.e.setVisible(isvi);
+       if(isvi == false) {
+    	   e = "x";
+       }
+       switch(e) {
+       case "x":
+    	   System.err.println("Your window is not visible!");
+    	   System.out.println("To close the window type 1 below: ");
+    	   Scanner re = new Scanner(System.in);
+    	   String choice = re.nextLine();
+    	   if(choice.equals("1")) {
+    		   System.exit(3);
+    	   }
+       }
     
-            System.err.println("Suggestion: If you typed a close operation\n other than 3 your frame will not close.\n End the process as soon as you are done.");    
     }
-    
     public static void setSiz(int si1, int si2)
     {
-        constants.e.setSize(si1, si2);
+    	flib er = new flib();
+    	flib.init();
+    	  if (si1 < 0 || si1> 999999) {
+              throw new IllegalArgumentException(
+                                  "Width out of range or too low...");
+          }
+    	  if(si2 < 0 || si2> 999999) {
+    		  throw new IllegalArgumentException("Height out of range or too low. . .")
+    		  ;
+    	  }
+        c.e.setSize(si1, si2);
     }
-    
     public static void closeOp(int closeop)
     {    
-        constants.e.setDefaultCloseOperation(closeop);
-    }
+    	try {
+    		  c.e.setDefaultCloseOperation(closeop);
+    		   
+    	}catch(IllegalArgumentException e) {
+    		
+    	}finally {
+    		
+    	}
+       }
     
     @SuppressWarnings("deprecation")
-    public static void setCur(int cursortype) {
-        System.err.println("setCur is deprecated. We suggest using\n Component.getCursor() for better performance.");
-        constants.e.setCursor(cursortype);
+    public static void setCur(int cursortype)
+    {
+    	c.cursortype = cursortype;
+    	c.e.setCursor(cursortype);
+    	System.err.println("setCur is deprecated, please use Component.setCursor();");
+    }
+    public static void draw3DRec(int i1, int i2, int i3, int i4, boolean raised)
+    {
+        c.i1 = i1;
+        c.i2 = i2;
+        c.i3 = i3;
+        c.i4 = i4;
+        c.raised = raised;
     }
     
-    public static void draw3DRec(int i1, int i2, int i3, int i4, boolean raised) {
-        constants.i1 = i1;
-        constants.i2 = i2;
-        constants.i3 = i3;
-        constants.i4 = i4;
-        constants.raised = raised;
-    }
+    public static void setBackg(int r, int g, int b)
+    {
+    	  c.r = r;
+    	  c.g = g;
+    	  c.b = b;
+	      c.e.getContentPane().setBackground(new Color(c.r, c.g, c.b));
+	}
     
-    public static void setBackg(int r, int g, int b, boolean debugging) {
-    	//Method to quickly change frame color in only one line//
-    	// 							R G B                     //
-    	  constants.r = r;
-    	  constants.g = g;
-    	  constants.b = b;
-    	  if(debugging == true) {
-    		  System.out.println("Since you enabled seeing rgb values,");
-	      System.out.println("Your RGB constants are: ");
-	      System.out.println(constants.r);
-	      System.out.println(constants.g);
-	      System.out.println(constants.b);
-    	}
-	      constants.e.getContentPane().setBackground(new Color(constants.r, constants.g, constants.b));
-	     }
- 
-//    public void sBounds(int r1, int r2, int r3, int r4) {
-//        constants.r1 = r1;
-//        constants.r2 = r2;
-//        constants.r3 = r3;
-//        constants.r4 = r4;
-//        constants.e.setBounds(r1,r2,r3,r4);
-//    }
-//    
     
-    // Method that draws an oval when it's called
+  
     public static void drawOval(int ov1, int ov2, int ov3, int ov4)
     {
-    	constants.ov1 = ov1;
-    	constants.ov2 = ov2;
-    	constants.ov3 = ov3;
-    	constants.ov4 = ov4;
+    	c.ov1 = ov1;
+    	c.ov2 = ov2;
+    	c.ov3 = ov3;
+    	c.ov4 = ov4;
     }
-    // Method that draws a round rectangle when it's calles
     public static void drawRoundRect(int rec1, int rec2, int rec3, int rec4, int rec5, int rec6)
     {
-    	constants.rec1 = rec1;
-    	constants.rec2 = rec2;
-    	constants.rec3 = rec3;
-    	constants.rec4 = rec4;
-    	constants.rec5 = rec5;
-    	constants.rec6 = rec6;
+    	init();
+    	c.rec1 = rec1;
+    	c.rec2 = rec2;
+    	c.rec3 = rec3;
+    	c.rec4 = rec4;
+    	c.rec5 = rec5;
+    	c.rec6 = rec6;
+    	
     }
-    // Method that draws an arc
     public static void drawArc(int ar1, int ar2, int ar3, int ar4, int ar5, int ar6)
     {
-    	constants.ar1 = ar1;
-    	constants.ar2 = ar2;
-    	constants.ar3 = ar3;
-    	constants.ar4 = ar4;
-    	constants.ar5 = ar5;
-    	constants.ar6 = ar6;
+    	init();
+    	c.ar1 = ar1;
+    	c.ar2 = ar2;
+    	c.ar3 = ar3;
+    	c.ar4 = ar4;
+    	c.ar5 = ar5;
+    	c.ar6 = ar6;
+    	
     }
     public static void drawLine(int x1, int x2, int y1, int y2)
     {
-    	constants.x1 = x1;
-    	constants.x2 = x2;
-    	constants.y1 = y1;
-    	constants.y2 = y2;
+    	init();
+    	c.x1 = x1;
+    	c.x2 = x2;
+    	c.y1 = y1;
+    	c.y2 = y2;
+    	
     }
-    // Method to paint the above with the constants, if any of those are null, the method goes on and continues
-    public void paint(Graphics g) {
-        g.draw3DRect(constants.i1,constants.i2,constants.i3,constants.i4,constants.raised);
-        g.drawOval(constants.ov1, constants.ov2, constants.ov3, constants.ov4);
-       g.drawArc(constants.ar1, constants.ar2, constants.ar3, constants.ar4, constants.ar5, constants.ar6);
-        g.drawLine(constants.x1, constants.x2, constants.y1, constants.y2);
-       g.drawRoundRect(constants.rec1,constants.rec2,constants.rec3, constants.rec4, constants.rec5, constants.rec6);
+  public static void create(int x11, int x22, int y11, int y22)
+  {
+	  init();
+	  c.x11 = x11;
+	  c.x22 = x22;
+	  c.y11 = y11;
+	  c.y22 = y22;
+  }
+   public static void setFrameIcon(String path)
+  {
+	  ImageIcon img2 = new ImageIcon(path);
+	  c.e.setIconImage(img2.getImage());
+  }
+  	public static void backgroundImg(String path, int x111, int y111)
+  	{
+  		c.x111 = x111;
+  		c.y111 = y111;
+  		if(path ==null) {
+  			System.err.println("You did not input a path for a background. \n use flib.backgroundImg(path, 200, 200); \n Your path is: " + path);
+  		}else if(path =="") {
+  			System.err.println("You did not input a path for a background. \n use flib.backgroundImg(path, 200, 200); \n Your path is: " + path);
+  	  		
+  		}
+	     img = Toolkit.getDefaultToolkit().getImage(path);
+	}
+  public static void drawStr(String str, int x, int y) {
+	  c.str = str;
+	  c.x33 = x;
+	  c.y33 = y;
+  }
+  public static void playSound(String clipFile, int looptime) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+	  if(clipFile.contains("mp3")) {
+			System.err.println("mp3 filetype is not supported by fLib!");
+		}else if(clipFile.contains("oog")) {
+			System.err.println("oog filetype is not supported by fLib!");
+		}
+		c.audioInputStream = AudioSystem.getAudioInputStream(new File(clipFile).getAbsoluteFile());
+		c.clip = AudioSystem.getClip();
+		c.clip.open(c.audioInputStream);
+		c.clip.loop(looptime);	
+  }
+  public static void play() {
+	  c.clip.start();
+  }
+  public void paint(Graphics g){
+        g.draw3DRect(c.i1,c.i2,c.i3,c.i4,c.raised);
+        g.drawOval(c.ov1, c.ov2, c.ov3, c.ov4);
+        g.drawArc(c.ar1, c.ar2, c.ar3, c.ar4, c.ar5, c.ar6);
+        g.drawLine(c.x1, c.x2, c.y1, c.y2);
+        g.drawRoundRect(c.rec1,c.rec2,c.rec3, c.rec4, c.rec5, c.rec6);
+        g.create(c.x11, c.x22, c.y11, c.y22);
+        g.drawImage(img, c.x111, c.y111, null);
+        g.drawString(c.str, c.x33, c.y33);
     }
-    
-    public static void main(String[]args)
+    public static void setResizable(boolean resizable)
     {
-    constants.e2 = new JPanel();
-//   constants.e2.setBackground(new Color(233,222,100));
-    constants.e.add(constants.e2);
-    constants.e.setLocationRelativeTo(null);
-        flib i = new flib();
-//         i.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        constants.e.add(i);  
-     }
+    	c.e.setResizable(resizable);
+    }
+   public static void setbounds(int i1, int i2, int i3, int i4)
+   {
+	   c.e.setBounds(i1,i2,i3,i4);
+   }
+    private static  void debug()
+    {
+    	 System.out.println("Your cursortype is: "+ c.cursortype);
+    	 System.err.println("Suggestion: If you typed a close operation\n other than 3 your frame will not close.\n End the process as soon as you are done.");    
+    	 System.out.println("Your RGB c are: ");
+         System.out.println(c.r);
+         System.out.println(c.g);
+         System.out.println(c.b);
+	    // ****************************************************//
+         System.out.println("fLib uses the following libraries:");
+         System.out.println("java.awt.Canvas;                                  \r\n"
+         		+ "java.awt.Color;                                   \r\n"
+         		+ "java.awt.Graphics;                                \r\n"
+         		+ "java.awt.Image;                                   \r\n"
+         		+ "java.awt.Toolkit;                                 \r\n"
+         		+ "java.awt.geom.Ellipse2D;                          \r\n"
+         		+ "java.awt.image.BufferedImage;                     \r\n"
+         		+ "java.io.File;                                     \r\n"
+         		+ "java.io.IOException;                              \r\n"
+         		+ "java.util.Scanner;                                \r\n"
+         		+ "javax.sound.sampled.AudioInputStream;             \r\n"
+         		+ "javax.sound.sampled.AudioSystem;                  \r\n"
+         		+ "javax.sound.sampled.Clip;                         \r\n"
+         		+ "javax.sound.sampled.LineUnavailableException;     \r\n"
+         		+ "javax.sound.sampled.UnsupportedAudioFileException;\r\n"
+         		+ "javax.swing.ImageIcon;                            \r\n"
+         		+ "flib.c.c;                         ");
+    }
+    public static void setFrameShape(int sh1, int sh2, int sh3, int sh4)
+    {
+    	c.e.setShape(new Ellipse2D.Double(sh1, sh2, sh3, sh4));
+    }
+   public static void getBackgr()
+   {
+	   c.e2.getBackground();
+   }
+   public static void addButton(String text, String layout, int x, int y, int xx, int yy) {
+	  c.e0.setText(text);
+	  if(layout.equals("flow")) {
+	  c.e.getContentPane().setLayout(new FlowLayout());
+	  }
+	  c.e0.setBounds(x, y, xx, yy);
+	  c.e2.add(c.e0);
+   }
+   // Main entry point of library
+    public static void init()
+    {
+    c.e.add(c.e2);
+    c.e.setLocationRelativeTo(null);
+    flib i = new flib();
+    c.e.add(i);  
+   }
 }
