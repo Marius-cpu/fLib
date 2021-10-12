@@ -4,7 +4,7 @@ A simple Java library that aims to simplify JFrame creation and customization
 - File sizes are lightweight
 
 
-# Usage
+# Setting up
 
 	Download fLib's source code and compile it
 - Export the code to a JAR file**
@@ -12,7 +12,7 @@ A simple Java library that aims to simplify JFrame creation and customization
 - **This is done because not many people trust the executable JAR so you can check the code before-hand and compile it safely
 
 
-# Example
+# Usage
 ```
 import flib.flib;
 public class Example extends flib{
