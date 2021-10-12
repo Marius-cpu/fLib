@@ -12,7 +12,7 @@ A simple Java library that aims to simplify JFrame creation and customization
 - **This is done because not many people trust the executable JAR so you can check the code before-hand and compile it safely
 
 
-# Examples
+# Example
 ```
 import flib.flib;
 public class Example extends flib{
