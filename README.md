@@ -16,7 +16,7 @@ import flib.flib;
 public class Example extends flib{
 	public static void main(String[]args) {
 		setBackg(111, 80, 245);
-    frameTitle("fLib demo");
+    		frameTitle("fLib demo");
 		setSiz(400, 300);
 		isVis(true);
 		closeOp(3);
