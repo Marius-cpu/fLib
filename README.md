@@ -9,6 +9,8 @@ A simple Java library that aims to simplify JFrame creation and customization
 	Download fLib's source code and compile it
 - Export the code to a JAR file*
 - Include the JAR file into your program after you added it to your classpath
+- **This is done because not many people trust the executable JAR so you can check the code before-hand and compile it safely
+
 
 # Examples
 ```
@@ -27,4 +29,3 @@ public class Example extends flib{
 
 This will create a frame with the text "Hello world!" and a background image
   ![fLib](readme.png)
-*This is done because not many people trust the executable JAR so you can check the code before-hand and compile it safely
