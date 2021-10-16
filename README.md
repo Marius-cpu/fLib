@@ -27,5 +27,5 @@ public class Example extends flib{
 }
 ```
 
-This will create a frame with the text "Hello world!" and a background image
+This will create a frame with the text "Hello world!" and a background color(RGB)
   ![fLib](readme.png)
