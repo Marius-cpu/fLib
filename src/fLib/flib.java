@@ -60,7 +60,7 @@ public class flib extends Canvas {
     c.e.setTitle(f);
     }
 	/***
-	 * Can be called to show debug info
+	 * Can be called to show debugging info
 	 * @param debg boolean to enable debugging
 	 * @throws IOException
 	 */
